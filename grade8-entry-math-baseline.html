@@ -97,7 +97,7 @@
 <div class="wrap">
   <header>
     <h1>Math Baseline Assessment</h1>
-    <p class="sub">Grade 7 mastery · 16 questions · about 30 minutes · calculator allowed (Q1, Q2, Q4, Q7 are no-calculator)</p>
+    <p class="sub">Grade 7 mastery · 16 questions · about 30 minutes · calculator allowed (Q1, Q2, Q3, Q6 are no-calculator)</p>
     <div class="intro">
       <strong>Before you begin</strong>
       <ul>
@@ -120,7 +120,7 @@
   <div id="solutions"></div>
 
   <div class="pagefoot">
-    All items are authentic released questions from the New York State Testing Program (Grade 7 Mathematics, 2023 &amp; 2025,
+    All items are authentic released questions from the New York State Testing Program (Grade 7 Mathematics, 2023 &amp; 2024 &amp; 2025,
     © NYSED) and the Maryland Comprehensive Assessment Program (Math 7 2024 Public Release, © MSDE). Figures were
     redrawn from the originals. Standard codes refer to the Common Core / NY Next Generation Learning Standards.
   </div>
@@ -128,7 +128,6 @@
 
 <script>
 /* ============================ FIGURE HELPERS ============================ */
-/* Number line -9..9 with a labeled point */
 function numberLine(markValue, markLabel){
   const xmin=-9,xmax=9,u=25,padL=24,y=46,top=14;
   const W=(xmax-xmin)*u+padL*2, H=78;
@@ -144,9 +143,8 @@ function numberLine(markValue, markLabel){
   g+=`<text x="${sx(markValue)}" y="${top}" font-size="15" font-weight="bold" text-anchor="middle" fill="#1d4ed8">${markLabel}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" class="svg">${g}</svg>`;
 }
-/* Coordinate graph with a ray from origin through a point (for constant of proportionality) */
 function propGraph(){
-  const ox=42, oy=250, ux=42, uy=24; // x:0..5, y:0..9
+  const ox=42, oy=250, ux=42, uy=24;
   const sx=x=>ox+x*ux, sy=y=>oy-y*uy;
   let g='';
   for(let x=0;x<=5;x++) g+=`<line x1="${sx(x)}" y1="${sy(0)}" x2="${sx(x)}" y2="${sy(9)}" stroke="#e2e8f0"/>`;
@@ -157,43 +155,12 @@ function propGraph(){
   g+=`<text x="${sx(0)-4}" y="${sy(9)-10}" font-size="12" fill="#475569">y</text>`;
   for(let x=1;x<=5;x++) g+=`<text x="${sx(x)}" y="${sy(0)+16}" font-size="11" text-anchor="middle" fill="#64748b">${x}</text>`;
   for(let y=1;y<=9;y++) g+=`<text x="${sx(0)-8}" y="${sy(y)+4}" font-size="11" text-anchor="end" fill="#64748b">${y}</text>`;
-  // line through (0,0) and (3,9)
   g+=`<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(3)}" y2="${sy(9)}" stroke="#2563eb" stroke-width="2.5"/>`;
   g+=`<polygon points="${sx(3)},${sy(9)} ${sx(3)-6},${sy(9)+2} ${sx(3)+1},${sy(9)+8}" fill="#2563eb"/>`;
   g+=`<circle cx="${sx(2)}" cy="${sy(6)}" r="4" fill="#1d4ed8"/><text x="${sx(2)+8}" y="${sy(6)-6}" font-size="12" font-weight="bold" fill="#1d4ed8">(2, 6)</text>`;
   g+=`<circle cx="${sx(3)}" cy="${sy(9)}" r="4" fill="#1d4ed8"/><text x="${sx(3)+8}" y="${sy(9)+4}" font-size="12" font-weight="bold" fill="#1d4ed8">(3, 9)</text>`;
   return `<svg viewBox="0 0 300 290" class="svg">${g}</svg>`;
 }
-/* Simple cube */
-const cubeSVG = `<svg viewBox="0 0 200 180" class="svg" style="max-width:200px">
-  <polygon points="40,60 120,60 120,140 40,140" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
-  <polygon points="40,60 70,35 150,35 120,60" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
-  <polygon points="120,60 150,35 150,115 120,140" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
-</svg>`;
-/* L-shaped solid (composite prism). Front L: bottom 4, right 4, notch 2x2 top-left; depth 2. */
-const lSolidSVG = `<svg viewBox="0 0 320 230" class="svg" style="max-width:320px">
-  <!-- front L face (u=34). origin front bottom-left at (60,190) -->
-  <polygon points="60,190 196,190 196,54 128,54 128,122 60,122"
-           fill="#eef2f7" stroke="#1d4ed8" stroke-width="2"/>
-  <!-- depth offset (dx=34,dy=-24) -->
-  <polygon points="60,122 94,98 94,98 60,122" fill="none"/>
-  <line x1="60" y1="122" x2="94" y2="98" stroke="#1d4ed8" stroke-width="2"/>
-  <line x1="60" y1="190" x2="94" y2="166" stroke="#1d4ed8" stroke-width="2"/>
-  <line x1="196" y1="190" x2="230" y2="166" stroke="#1d4ed8" stroke-width="2"/>
-  <line x1="196" y1="54" x2="230" y2="30" stroke="#1d4ed8" stroke-width="2"/>
-  <line x1="128" y1="54" x2="162" y2="30" stroke="#1d4ed8" stroke-width="2"/>
-  <line x1="128" y1="122" x2="162" y2="98" stroke="#1d4ed8" stroke-width="2"/>
-  <polygon points="94,98 94,166 60,190 60,122" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
-  <polyline points="94,166 230,166 230,30 162,30 162,98 94,98" fill="none" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
-  <!-- labels -->
-  <text x="150" y="48" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
-  <text x="202" y="128" font-size="13" font-weight="bold" fill="#0f172a">4 ft</text>
-  <text x="118" y="180" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">4 ft</text>
-  <text x="34" y="160" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
-  <text x="86" y="92" font-size="12" font-weight="bold" fill="#0f172a">2 ft</text>
-  <text x="92" y="118" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">2 ft</text>
-</svg>`;
-/* Spinner numbered 1..12 */
 function spinnerSVG(){
   const cx=110,cy=110,r=92;
   let g=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#475569" stroke-width="3"/>`;
@@ -209,10 +176,27 @@ function spinnerSVG(){
   g+=`<circle cx="${cx}" cy="${cy}" r="5" fill="#1d4ed8"/>`;
   return `<svg viewBox="0 0 220 220" class="svg" style="max-width:220px">${g}</svg>`;
 }
+const lSolidSVG = `<svg viewBox="0 0 320 230" class="svg" style="max-width:320px">
+  <polygon points="60,190 196,190 196,54 128,54 128,122 60,122" fill="#eef2f7" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="60" y1="122" x2="94" y2="98" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="60" y1="190" x2="94" y2="166" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="196" y1="190" x2="230" y2="166" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="196" y1="54" x2="230" y2="30" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="128" y1="54" x2="162" y2="30" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="128" y1="122" x2="162" y2="98" stroke="#1d4ed8" stroke-width="2"/>
+  <polygon points="94,98 94,166 60,190 60,122" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
+  <polyline points="94,166 230,166 230,30 162,30 162,98 94,98" fill="none" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
+  <text x="150" y="48" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="202" y="128" font-size="13" font-weight="bold" fill="#0f172a">4 ft</text>
+  <text x="118" y="182" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">4 ft</text>
+  <text x="34" y="160" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="86" y="92" font-size="12" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="92" y="118" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">2 ft</text>
+</svg>`;
 
-/* ============================ ITEMS ============================ */
+/* ============================ ITEMS (16 · blueprint-weighted RP4 NS4 EE4 G2 SP2) ============================ */
 const Q = [
- /* 1 */ {domain:"Proportional Reasoning", standard:"7.RP.A.1", source:"MCAP Math 7 2024 Release, Q14", gateway:true, type:"text",
+ {domain:"Proportional Reasoning", standard:"7.RP.A.1", source:"MCAP Math 7 2024 Release, Q14", gateway:true, type:"text",
    prompt:"A copy machine prints 10 copies per 1/4 minute. At what rate, in copies per minute, does the copy machine print?",
    unit:"copies per minute",
    validate:r=>num(r)===40, answerLabel:"40 copies per minute",
@@ -220,14 +204,14 @@ const Q = [
      "A full minute is four of those quarter-minutes: 10 × 4 = <strong>40</strong>.",
      "(Or divide: 10 ÷ 1/4 = 10 × 4 = 40.)","Correct answer: <strong>40 copies per minute</strong>."]},
 
- /* 2 */ {domain:"Number System", standard:"7.NS.A.1b", source:"NYS 2023, Session 2, Q36", gateway:true, type:"radio",
+ {domain:"Number System", standard:"7.NS.A.1b", source:"NYS 2023, Session 2, Q36", gateway:true, type:"radio",
    prompt:"The sum of two numbers is zero. If one of the numbers is 5, what is the other number?",
    options:[{key:"A",text:"−10"},{key:"B",text:"−5"},{key:"C",text:"0"},{key:"D",text:"5"}],
    correct:"B", answerLabel:"B) −5",
    solution:["Two numbers add to <strong>zero</strong> only when they are <strong>opposites</strong> (additive inverses).",
      "The opposite of 5 is <strong>−5</strong>, because 5 + (−5) = 0.","Correct answer: <strong>B) −5</strong>."]},
 
- /* 3 */ {domain:"Number System", standard:"7.NS.A.1b", source:"MCAP Math 7 2024 Release, Q11", type:"radio",
+ {domain:"Number System", standard:"7.NS.A.1b", source:"MCAP Math 7 2024 Release, Q11", type:"radio",
    prompt:"The location of point k is plotted on the number line below. Which value represents k + 4 ?",
    figure:()=>numberLine(-5,'k'),
    options:[{key:"A",text:"−9"},{key:"B",text:"−1"},{key:"C",text:"1"},{key:"D",text:"9"}],
@@ -236,7 +220,7 @@ const Q = [
      "Adding 4 means moving <strong>4 units to the right</strong>: −5 + 4.",
      "−5 + 4 = <strong>−1</strong>.","Correct answer: <strong>B) −1</strong>."]},
 
- /* 4 */ {domain:"Statistics & Probability", standard:"7.SP.C.5", source:"MCAP Math 7 2024 Release, Q19", type:"match",
+ {domain:"Statistics & Probability", standard:"7.SP.C.5", source:"MCAP Math 7 2024 Release, Q19", type:"match",
    prompt:"A spinner has 12 equal sections numbered 1 to 12. The arrow is spun once. Match each event to the phrase that best describes its probability.",
    figure:()=>spinnerSVG(),
    events:[
@@ -251,7 +235,7 @@ const Q = [
      "<strong>Event L (the number 10):</strong> just 1 of 12 → 1/12 ≈ 0.08, close to 0 → <strong>unlikely</strong>.",
      "Correct: J = neither, K = likely, L = unlikely."]},
 
- /* 5 */ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2023, Session 1, Q32", gateway:true, type:"radio",
+ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2023, Session 1, Q32", gateway:true, type:"radio",
    prompt:"The bill for a dinner is $58.20, before sales tax and tip. Sales tax is 5% of the bill and the tip is 20% of the bill. How much is the total bill including tax and tip?",
    options:[{key:"A",text:"$83.20"},{key:"B",text:"$72.75"},{key:"C",text:"$62.27"},{key:"D",text:"$58.45"}],
    correct:"B", answerLabel:"B) $72.75",
@@ -259,7 +243,7 @@ const Q = [
      "25% of 58.20 = 0.25 × 58.20 = <strong>$14.55</strong>.",
      "Total = 58.20 + 14.55 = <strong>$72.75</strong> (same as 1.25 × 58.20).","Correct answer: <strong>B) $72.75</strong>."]},
 
- /* 6 */ {domain:"Number System", standard:"7.NS.A.2c", source:"MCAP Math 7 2024 Release, Q7", gateway:true, type:"text",
+ {domain:"Number System", standard:"7.NS.A.2c", source:"MCAP Math 7 2024 Release, Q7", gateway:true, type:"text",
    prompt:"What is the value of the expression (−1/2) ÷ (3/5) ? Enter your answer as a fraction (for example, -5/6).",
    unit:"",
    validate:r=>fracEq(r,-5,6), answerLabel:"−5/6",
@@ -267,7 +251,7 @@ const Q = [
      "(−1/2) × (5/3) = (−1 × 5) / (2 × 3) = <strong>−5/6</strong>.",
      "A negative divided by a positive is negative.","Correct answer: <strong>−5/6</strong>."]},
 
- /* 7 */ {domain:"Expressions & Equations", standard:"7.EE.A.2", source:"MCAP Math 7 2024 Release, Q3", type:"checkbox",
+ {domain:"Expressions & Equations", standard:"7.EE.A.2", source:"MCAP Math 7 2024 Release, Q3", type:"checkbox",
    prompt:"Miguel eats a meal and leaves a 15% tip for the server. The cost of the meal without the tip is p dollars. Which expressions represent the total cost, in dollars, of the meal and the tip?",
    options:[{key:"A",text:"1.15p"},{key:"B",text:"(15/100)p"},{key:"C",text:"p + 15"},{key:"D",text:"p + 0.15p"},{key:"E",text:"p + 1.15p"}],
    correct:["A","D"], answerLabel:"A (1.15p) and D (p + 0.15p)",
@@ -276,7 +260,7 @@ const Q = [
      "B = (15/100)p = 0.15p is only the tip. C adds a flat $15, not 15%. E double-counts the meal.",
      "Correct answers: <strong>A and D</strong>."]},
 
- /* 8 */ {domain:"Proportional Reasoning", standard:"7.RP.A.2b", source:"MCAP Math 7 2024 Release, Q10", type:"text",
+ {domain:"Proportional Reasoning", standard:"7.RP.A.2b", source:"MCAP Math 7 2024 Release, Q10", type:"text",
    prompt:"The graph shows a proportional relationship that passes through the points (2, 6) and (3, 9). What is the constant of proportionality?",
    figure:()=>propGraph(),
    unit:"",
@@ -285,7 +269,7 @@ const Q = [
      "Using (2, 6): 6 ÷ 2 = <strong>3</strong>. Check with (3, 9): 9 ÷ 3 = 3. ✓",
      "So y = 3x, and the constant is <strong>3</strong>.","Correct answer: <strong>3</strong>."]},
 
- /* 9 */ {domain:"Number System", standard:"7.NS.A.3", source:"MCAP Math 7 2024 Release, Q2", type:"text",
+ {domain:"Number System", standard:"7.NS.A.3", source:"MCAP Math 7 2024 Release, Q2", type:"text",
    prompt:"The freezing temperatures of two substances are shown. The freezing temperature of chloroform is how many degrees Celsius greater than the freezing temperature of ethanol?",
    figure:()=>`<table class="data"><caption>Freezing Temperatures</caption><tr><th>Substance</th><th>Freezing Temperature (°C)</th></tr><tr><td>Chloroform</td><td>−63.5</td></tr><tr><td>Ethanol</td><td>−114.7</td></tr></table>`,
    unit:"°C",
@@ -294,7 +278,7 @@ const Q = [
      "Subtracting a negative is adding: −63.5 + 114.7.",
      "114.7 − 63.5 = <strong>51.2</strong>.","Correct answer: <strong>51.2 °C</strong>."]},
 
- /* 10 */ {domain:"Statistics & Probability", standard:"7.SP.A.2", source:"MCAP Math 7 2024 Release, Q34", type:"radio",
+ {domain:"Statistics & Probability", standard:"7.SP.A.2", source:"MCAP Math 7 2024 Release, Q34", type:"radio",
    prompt:"A company produces 25,000 cans of soup per day. A quality-control worker checks a random sample of 50 cans each day. On a certain day, 2 cans in the sample contained less than 8 ounces. Based on this sample, what is the best estimate for the number of cans produced that day containing less than 8 ounces?",
    options:[{key:"A",text:"100"},{key:"B",text:"250"},{key:"C",text:"500"},{key:"D",text:"1,000"}],
    correct:"D", answerLabel:"D) 1,000",
@@ -302,7 +286,7 @@ const Q = [
      "Apply that rate to the whole day: 0.04 × 25,000.",
      "0.04 × 25,000 = <strong>1,000</strong> cans.","Correct answer: <strong>D) 1,000</strong>."]},
 
- /* 11 */ {domain:"Expressions & Equations", standard:"7.EE.4b", source:"NYS 2025, Session 1, Q29", type:"radio",
+ {domain:"Expressions & Equations", standard:"7.EE.4b", source:"NYS 2025, Session 1, Q29", type:"radio",
    prompt:"Shannon has $500.00 in her account and withdraws $40.00 each week. With no other deposits or withdrawals, what is the maximum number of weeks she can withdraw and still keep a balance of at least $200.00?",
    options:[{key:"A",text:"5"},{key:"B",text:"7"},{key:"C",text:"8"},{key:"D",text:"12"}],
    correct:"B", answerLabel:"B) 7",
@@ -311,7 +295,7 @@ const Q = [
      "Only whole weeks count, and 8 weeks would dip below $200, so the maximum is <strong>7</strong>.",
      "(After 7 weeks: 500 − 280 = $220 ≥ $200. ✓)","Correct answer: <strong>B) 7</strong>."]},
 
- /* 12 */ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2024, Session 2, Q41", type:"text",
+ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2024, Session 2, Q41", type:"text",
    prompt:"Kenneth bought a shirt originally priced at $55.00. After a discount, he paid $38.50. What was the percent discount off the original price? (Type just the number, e.g. 30 for 30%.)",
    unit:"%",
    validate:r=>num(r)===30, answerLabel:"30%",
@@ -319,7 +303,7 @@ const Q = [
      "Percent discount = discount ÷ original = 16.50 ÷ 55.00.",
      "16.50 ÷ 55.00 = 0.30 = <strong>30%</strong>.","Correct answer: <strong>30%</strong>."]},
 
- /* 13 */ {domain:"Expressions & Equations", standard:"7.EE.A.1", source:"MCAP Math 7 2024 Release, Q8", gateway:true, type:"radio",
+ {domain:"Expressions & Equations", standard:"7.EE.A.1", source:"MCAP Math 7 2024 Release, Q8", gateway:true, type:"radio",
    prompt:"Which expression is equivalent to −2(w − 3) + 5(6w + 4), written with exactly two terms?",
    options:[{key:"A",text:"28w + 26"},{key:"B",text:"28w + 14"},{key:"C",text:"28w − 14"},{key:"D",text:"4w + 26"}],
    correct:"A", answerLabel:"A) 28w + 26",
@@ -327,7 +311,7 @@ const Q = [
      "5(6w + 4) = 30w + 20.",
      "Combine like terms: (−2w + 30w) + (6 + 20) = <strong>28w + 26</strong>.","Correct answer: <strong>A) 28w + 26</strong>."]},
 
- /* 14 */ {domain:"Expressions & Equations", standard:"7.EE.B.4a", source:"MCAP Math 7 2024 Release, Q5", type:"text",
+ {domain:"Expressions & Equations", standard:"7.EE.B.4a", source:"MCAP Math 7 2024 Release, Q5", type:"text",
    prompt:"A three-dimensional figure has one base and 3 faces. All 3 faces have the same area. The base has area 5 square centimeters, and the total surface area (including the base) is 26 square centimeters. What is the area of one face?",
    unit:"square centimeters",
    validate:r=>num(r)===7, answerLabel:"7 square centimeters",
@@ -335,7 +319,7 @@ const Q = [
      "Subtract the base: 3·(face) = 26 − 5 = <strong>21</strong>.",
      "Divide by 3: one face = 21 ÷ 3 = <strong>7</strong>.","Correct answer: <strong>7 square centimeters</strong>."]},
 
- /* 15 */ {domain:"Geometry", standard:"7.G.1", source:"NYS 2025, Session 2, Q47", type:"text",
+ {domain:"Geometry", standard:"7.G.1", source:"NYS 2025, Session 2, Q47", type:"text",
    prompt:"A rectangular mural is designed on a piece of paper 8 inches long and 6 inches wide. The scale is 1 inch to 1.75 feet. What is the actual area, in square feet, of the mural?",
    unit:"square feet",
    validate:r=>num(r)===147, answerLabel:"147 square feet",
@@ -344,7 +328,7 @@ const Q = [
      "(Trap: don’t scale the paper area 48 by 1.75 — area scales by 1.75² = 3.0625; 48 × 3.0625 = 147, the same.)",
      "Correct answer: <strong>147 square feet</strong>."]},
 
- /* 16 */ {domain:"Geometry", standard:"7.G.B.6", source:"MCAP Math 7 2024 Release, Q28", type:"radio",
+ {domain:"Geometry", standard:"7.G.B.6", source:"MCAP Math 7 2024 Release, Q28", type:"radio",
    prompt:"The figure shows an L-shaped solid. At each corner, three edges meet at right angles. What is the total surface area, in square feet, of the solid?",
    figure:()=>lSolidSVG,
    options:[{key:"A",text:"28"},{key:"B",text:"36"},{key:"C",text:"56"},{key:"D",text:"72"}],
@@ -354,7 +338,7 @@ const Q = [
      "Total = 24 + 32 = <strong>56 square feet</strong>.","Correct answer: <strong>C) 56</strong>."]}
 ];
 
-/* ============================ HELPERS ============================ */
+/* ============================ ANSWER HELPERS ============================ */
 function num(raw){ const v=parseFloat(String(raw).replace(/[−–—]/g,'-').replace(/[, ]/g,'').replace(/[^0-9.\-]/g,'')); return isNaN(v)?null:v; }
 function fracEq(raw,n,d){
   let s=String(raw).replace(/[−–—]/g,'-').replace(/\s/g,'');
