@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 8 Entry — Math Baseline (Grade 7 Mastery)</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+    --blue:#2563eb; --blue-d:#1d4ed8; --bg:#eef2f7;
+    --green:#15803d; --green-bg:#ecfdf3; --red:#b91c1c; --red-bg:#fef2f2;
+    --amber:#92400e; --amber-bg:#fffbeb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.6;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 18px 80px;}
+  .topbar{position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px;}
+  .topbar .title{font-weight:700; font-size:1rem;}
+  .timer{font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem;
+    background:#eff6ff; color:var(--blue-d); border:1px solid #bfdbfe; padding:6px 14px; border-radius:999px; white-space:nowrap;}
+  .timer.up{background:var(--red-bg); color:var(--red); border-color:#fecaca;}
+  header{padding:28px 0 6px;}
+  header h1{margin:0 0 6px; font-size:1.7rem;}
+  header .sub{color:var(--muted); margin:0 0 18px;}
+  .intro{background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:8px;}
+  .intro ul{margin:8px 0 0; padding-left:20px;} .intro li{margin:4px 0;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:18px 0; box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .qnum{display:inline-block; font-size:.78rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--blue-d); background:#eff6ff; padding:3px 10px; border-radius:999px;}
+  .prompt{font-size:1.12rem; font-weight:600; margin:12px 0 14px;}
+  .hint{font-size:.9rem; color:var(--muted); margin:-6px 0 10px;}
+  .figure{margin:6px 0 16px;}
+  .svg{max-width:380px; width:100%; height:auto; border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px;}
+  .figcap{font-size:.8rem; color:var(--muted); margin-top:4px;}
+  table.data{border-collapse:collapse; margin:6px 0 14px; font-size:1.02rem;}
+  table.data caption{font-weight:700; margin-bottom:6px; text-align:left;}
+  table.data th, table.data td{border:1px solid #cbd5e1; padding:8px 16px; text-align:center;}
+  table.data th{background:#eff6ff;}
+  .opt{display:flex; align-items:flex-start; gap:10px; padding:11px 14px; margin:8px 0;
+    border:1px solid var(--line); border-radius:10px; cursor:pointer; transition:.12s;}
+  .opt:hover{border-color:#bfdbfe; background:#f8fafc;}
+  .opt input{margin-top:3px; width:18px; height:18px; flex:none; accent-color:var(--blue);}
+  .opt .otext{font-size:1.02rem;}
+  .textans{width:100%; max-width:280px; font-size:1.05rem; padding:11px 14px; border:1px solid #cbd5e1; border-radius:10px;}
+  .textans:focus{outline:none; border-color:var(--blue); box-shadow:0 0 0 3px #dbeafe;}
+  .unit{font-size:1rem; color:var(--muted); margin-left:8px;}
+  table.match{width:100%; border-collapse:collapse; margin:6px 0 4px;}
+  table.match th,table.match td{border:1px solid var(--line); padding:9px 8px; text-align:center;}
+  table.match th{background:#eff6ff; font-size:.95rem;}
+  table.match td.rowlab{text-align:left; font-weight:600; background:#f8fafc;}
+  table.match input{width:18px;height:18px;accent-color:var(--blue);}
+  .submit-row{margin:26px 0 10px; text-align:center;}
+  button.submit{background:var(--blue); color:#fff; border:0; font-size:1.08rem; font-weight:700; padding:14px 40px; border-radius:12px; cursor:pointer;}
+  button.submit:hover{background:var(--blue-d);}
+  .note{font-size:.86rem; color:var(--muted); margin-top:10px;}
+  #results{display:none; margin-top:26px;}
+  .score-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px 24px; text-align:center;}
+  .score-big{font-size:2.6rem; font-weight:800; margin:2px 0;}
+  .band{display:inline-block; font-weight:700; padding:5px 14px; border-radius:999px; margin-top:6px;}
+  .band.ok{background:var(--green-bg); color:var(--green);}
+  .band.mid{background:var(--amber-bg); color:var(--amber);}
+  .band.low{background:var(--red-bg); color:var(--red);}
+  table.brk{width:100%; border-collapse:collapse; margin:18px 0 0;}
+  table.brk td{padding:9px 6px; border-bottom:1px solid var(--line); text-align:left;}
+  table.brk td:last-child{text-align:right; font-weight:700; font-variant-numeric:tabular-nums;}
+  .flag{margin-top:16px; padding:14px 16px; border-radius:12px; text-align:left; background:var(--amber-bg); border:1px solid #fde68a; color:var(--amber);}
+  #solutions{display:none; margin-top:26px;}
+  .sol-head{font-size:1.25rem; font-weight:800; margin:0 0 4px;}
+  .sol-sub{color:var(--muted); margin:0 0 14px;}
+  .slide{background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px 26px;}
+  .slide .counter{font-size:.82rem; font-weight:700; color:var(--blue-d); text-transform:uppercase; letter-spacing:.04em;}
+  .slide .sq{font-size:1.08rem; font-weight:600; margin:8px 0 14px;}
+  .ans-line{padding:9px 13px; border-radius:9px; margin:6px 0; font-size:1rem;}
+  .ans-line.you{background:var(--red-bg); color:var(--red);}
+  .ans-line.right{background:var(--green-bg); color:var(--green);}
+  .method-h{font-weight:800; margin:20px 0 10px; font-size:1.05rem;}
+  .step{font-size:1.05rem; line-height:1.85; margin:0 0 15px;}
+  .srctag{font-size:.8rem; color:var(--muted); margin-top:14px; padding-top:10px; border-top:1px dashed var(--line);}
+  .nav{display:flex; justify-content:space-between; align-items:center; margin-top:22px;}
+  .nav button{background:#fff; border:1px solid #cbd5e1; color:var(--ink); font-weight:700; padding:10px 20px; border-radius:10px; cursor:pointer; font-size:1rem;}
+  .nav button:hover:not(:disabled){border-color:var(--blue); color:var(--blue-d);}
+  .nav button:disabled{opacity:.4; cursor:default;}
+  .perfect{background:var(--green-bg); border:1px solid #bbf7d0; color:var(--green); padding:22px; border-radius:16px; text-align:center; font-size:1.15rem; font-weight:700;}
+  .retake{text-align:center; margin-top:24px;} .retake a{color:var(--blue-d); font-weight:700; text-decoration:none;}
+  .pagefoot{font-size:.8rem; color:var(--muted); margin-top:34px; text-align:center; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="title">Math Baseline · Entering Grade 8</span>
+  <span id="timer" class="timer">30:00</span>
+</div>
+
+<div class="wrap">
+  <header>
+    <h1>Math Baseline Assessment</h1>
+    <p class="sub">Grade 7 mastery · 16 questions · about 30 minutes · calculator allowed (Q1, Q2, Q4, Q7 are no-calculator)</p>
+    <div class="intro">
+      <strong>Before you begin</strong>
+      <ul>
+        <li>Answer every question as well as you can. Questions start easier and get more challenging toward the end.</li>
+        <li>Some questions say <strong>“Select all that apply”</strong> — there may be more than one correct choice.</li>
+        <li>For short-answer questions, type just the number (a fraction like <strong>-5/6</strong> is fine where asked).</li>
+        <li>The timer is a <strong>guide only</strong> — it will not submit for you. Press <strong>Submit</strong> when finished to see your score, a skill-by-skill breakdown, and worked solutions for anything missed.</li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="quiz"></div>
+
+  <div class="submit-row">
+    <button class="submit" id="submitBtn">Submit my answers</button>
+    <div class="note">You can submit at any time — the timer will never do it for you.</div>
+  </div>
+
+  <div id="results"></div>
+  <div id="solutions"></div>
+
+  <div class="pagefoot">
+    All items are authentic released questions from the New York State Testing Program (Grade 7 Mathematics, 2023 &amp; 2025,
+    © NYSED) and the Maryland Comprehensive Assessment Program (Math 7 2024 Public Release, © MSDE). Figures were
+    redrawn from the originals. Standard codes refer to the Common Core / NY Next Generation Learning Standards.
+  </div>
+</div>
+
+<script>
+/* ============================ FIGURE HELPERS ============================ */
+/* Number line -9..9 with a labeled point */
+function numberLine(markValue, markLabel){
+  const xmin=-9,xmax=9,u=25,padL=24,y=46,top=14;
+  const W=(xmax-xmin)*u+padL*2, H=78;
+  const sx=v=>padL+(v-xmin)*u;
+  let g=`<line x1="${sx(xmin)-10}" y1="${y}" x2="${sx(xmax)+10}" y2="${y}" stroke="#334155" stroke-width="2"/>`;
+  g+=`<polygon points="${sx(xmax)+10},${y} ${sx(xmax)+2},${y-5} ${sx(xmax)+2},${y+5}" fill="#334155"/>`;
+  g+=`<polygon points="${sx(xmin)-10},${y} ${sx(xmin)-2},${y-5} ${sx(xmin)-2},${y+5}" fill="#334155"/>`;
+  for(let v=xmin;v<=xmax;v++){
+    g+=`<line x1="${sx(v)}" y1="${y-6}" x2="${sx(v)}" y2="${y+6}" stroke="#334155" stroke-width="1.5"/>`;
+    g+=`<text x="${sx(v)}" y="${y+22}" font-size="12" text-anchor="middle" fill="#475569">${v}</text>`;
+  }
+  g+=`<circle cx="${sx(markValue)}" cy="${y}" r="6" fill="#2563eb"/>`;
+  g+=`<text x="${sx(markValue)}" y="${top}" font-size="15" font-weight="bold" text-anchor="middle" fill="#1d4ed8">${markLabel}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" class="svg">${g}</svg>`;
+}
+/* Coordinate graph with a ray from origin through a point (for constant of proportionality) */
+function propGraph(){
+  const ox=42, oy=250, ux=42, uy=24; // x:0..5, y:0..9
+  const sx=x=>ox+x*ux, sy=y=>oy-y*uy;
+  let g='';
+  for(let x=0;x<=5;x++) g+=`<line x1="${sx(x)}" y1="${sy(0)}" x2="${sx(x)}" y2="${sy(9)}" stroke="#e2e8f0"/>`;
+  for(let y=0;y<=9;y++) g+=`<line x1="${sx(0)}" y1="${sy(y)}" x2="${sx(5)}" y2="${sy(y)}" stroke="#e2e8f0"/>`;
+  g+=`<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(5)+6}" y2="${sy(0)}" stroke="#334155" stroke-width="2"/>`;
+  g+=`<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(0)}" y2="${sy(9)-6}" stroke="#334155" stroke-width="2"/>`;
+  g+=`<text x="${sx(5)+10}" y="${sy(0)+4}" font-size="12" fill="#475569">x</text>`;
+  g+=`<text x="${sx(0)-4}" y="${sy(9)-10}" font-size="12" fill="#475569">y</text>`;
+  for(let x=1;x<=5;x++) g+=`<text x="${sx(x)}" y="${sy(0)+16}" font-size="11" text-anchor="middle" fill="#64748b">${x}</text>`;
+  for(let y=1;y<=9;y++) g+=`<text x="${sx(0)-8}" y="${sy(y)+4}" font-size="11" text-anchor="end" fill="#64748b">${y}</text>`;
+  // line through (0,0) and (3,9)
+  g+=`<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(3)}" y2="${sy(9)}" stroke="#2563eb" stroke-width="2.5"/>`;
+  g+=`<polygon points="${sx(3)},${sy(9)} ${sx(3)-6},${sy(9)+2} ${sx(3)+1},${sy(9)+8}" fill="#2563eb"/>`;
+  g+=`<circle cx="${sx(2)}" cy="${sy(6)}" r="4" fill="#1d4ed8"/><text x="${sx(2)+8}" y="${sy(6)-6}" font-size="12" font-weight="bold" fill="#1d4ed8">(2, 6)</text>`;
+  g+=`<circle cx="${sx(3)}" cy="${sy(9)}" r="4" fill="#1d4ed8"/><text x="${sx(3)+8}" y="${sy(9)+4}" font-size="12" font-weight="bold" fill="#1d4ed8">(3, 9)</text>`;
+  return `<svg viewBox="0 0 300 290" class="svg">${g}</svg>`;
+}
+/* Simple cube */
+const cubeSVG = `<svg viewBox="0 0 200 180" class="svg" style="max-width:200px">
+  <polygon points="40,60 120,60 120,140 40,140" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <polygon points="40,60 70,35 150,35 120,60" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+  <polygon points="120,60 150,35 150,115 120,140" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+</svg>`;
+/* L-shaped solid (composite prism). Front L: bottom 4, right 4, notch 2x2 top-left; depth 2. */
+const lSolidSVG = `<svg viewBox="0 0 320 230" class="svg" style="max-width:320px">
+  <!-- front L face (u=34). origin front bottom-left at (60,190) -->
+  <polygon points="60,190 196,190 196,54 128,54 128,122 60,122"
+           fill="#eef2f7" stroke="#1d4ed8" stroke-width="2"/>
+  <!-- depth offset (dx=34,dy=-24) -->
+  <polygon points="60,122 94,98 94,98 60,122" fill="none"/>
+  <line x1="60" y1="122" x2="94" y2="98" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="60" y1="190" x2="94" y2="166" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="196" y1="190" x2="230" y2="166" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="196" y1="54" x2="230" y2="30" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="128" y1="54" x2="162" y2="30" stroke="#1d4ed8" stroke-width="2"/>
+  <line x1="128" y1="122" x2="162" y2="98" stroke="#1d4ed8" stroke-width="2"/>
+  <polygon points="94,98 94,166 60,190 60,122" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
+  <polyline points="94,166 230,166 230,30 162,30 162,98 94,98" fill="none" stroke="#1d4ed8" stroke-width="2" opacity="0.55"/>
+  <!-- labels -->
+  <text x="150" y="48" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="202" y="128" font-size="13" font-weight="bold" fill="#0f172a">4 ft</text>
+  <text x="118" y="180" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">4 ft</text>
+  <text x="34" y="160" font-size="13" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="86" y="92" font-size="12" font-weight="bold" fill="#0f172a">2 ft</text>
+  <text x="92" y="118" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">2 ft</text>
+</svg>`;
+/* Spinner numbered 1..12 */
+function spinnerSVG(){
+  const cx=110,cy=110,r=92;
+  let g=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#475569" stroke-width="3"/>`;
+  for(let i=0;i<12;i++){
+    const a=(-90 + i*30)*Math.PI/180;
+    g+=`<line x1="${cx}" y1="${cy}" x2="${cx+r*Math.cos(a)}" y2="${cy+r*Math.sin(a)}" stroke="#cbd5e1" stroke-width="1.5"/>`;
+  }
+  for(let n=1;n<=12;n++){
+    const a=(-90 + (n-1)*30 + 15)*Math.PI/180, tr=r-18;
+    g+=`<text x="${cx+tr*Math.cos(a)}" y="${cy+tr*Math.sin(a)+4}" font-size="13" text-anchor="middle" fill="#0f172a">${n}</text>`;
+  }
+  g+=`<line x1="${cx}" y1="${cy}" x2="${cx-30}" y2="${cy-58}" stroke="#1d4ed8" stroke-width="3"/>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="5" fill="#1d4ed8"/>`;
+  return `<svg viewBox="0 0 220 220" class="svg" style="max-width:220px">${g}</svg>`;
+}
+
+/* ============================ ITEMS ============================ */
+const Q = [
+ /* 1 */ {domain:"Proportional Reasoning", standard:"7.RP.A.1", source:"MCAP Math 7 2024 Release, Q14", gateway:true, type:"text",
+   prompt:"A copy machine prints 10 copies per 1/4 minute. At what rate, in copies per minute, does the copy machine print?",
+   unit:"copies per minute",
+   validate:r=>num(r)===40, answerLabel:"40 copies per minute",
+   solution:["“Per 1/4 minute” means 10 copies happen in a quarter of a minute.",
+     "A full minute is four of those quarter-minutes: 10 × 4 = <strong>40</strong>.",
+     "(Or divide: 10 ÷ 1/4 = 10 × 4 = 40.)","Correct answer: <strong>40 copies per minute</strong>."]},
+
+ /* 2 */ {domain:"Number System", standard:"7.NS.A.1b", source:"NYS 2023, Session 2, Q36", gateway:true, type:"radio",
+   prompt:"The sum of two numbers is zero. If one of the numbers is 5, what is the other number?",
+   options:[{key:"A",text:"−10"},{key:"B",text:"−5"},{key:"C",text:"0"},{key:"D",text:"5"}],
+   correct:"B", answerLabel:"B) −5",
+   solution:["Two numbers add to <strong>zero</strong> only when they are <strong>opposites</strong> (additive inverses).",
+     "The opposite of 5 is <strong>−5</strong>, because 5 + (−5) = 0.","Correct answer: <strong>B) −5</strong>."]},
+
+ /* 3 */ {domain:"Number System", standard:"7.NS.A.1b", source:"MCAP Math 7 2024 Release, Q11", type:"radio",
+   prompt:"The location of point k is plotted on the number line below. Which value represents k + 4 ?",
+   figure:()=>numberLine(-5,'k'),
+   options:[{key:"A",text:"−9"},{key:"B",text:"−1"},{key:"C",text:"1"},{key:"D",text:"9"}],
+   correct:"B", answerLabel:"B) −1",
+   solution:["Point k sits at <strong>−5</strong> on the number line.",
+     "Adding 4 means moving <strong>4 units to the right</strong>: −5 + 4.",
+     "−5 + 4 = <strong>−1</strong>.","Correct answer: <strong>B) −1</strong>."]},
+
+ /* 4 */ {domain:"Statistics & Probability", standard:"7.SP.C.5", source:"MCAP Math 7 2024 Release, Q19", type:"match",
+   prompt:"A spinner has 12 equal sections numbered 1 to 12. The arrow is spun once. Match each event to the phrase that best describes its probability.",
+   figure:()=>spinnerSVG(),
+   events:[
+     {key:"J", text:"Event J: lands on an even number"},
+     {key:"K", text:"Event K: lands on a number greater than 2"},
+     {key:"L", text:"Event L: lands on the number 10"}],
+   cats:["Unlikely","Neither likely nor unlikely","Likely"],
+   correctMatch:{J:"Neither likely nor unlikely", K:"Likely", L:"Unlikely"},
+   answerLabel:"J → Neither likely nor unlikely · K → Likely · L → Unlikely",
+   solution:["<strong>Event J (even):</strong> 6 of the 12 numbers are even → 6/12 = 1/2, exactly half → <strong>neither likely nor unlikely</strong>.",
+     "<strong>Event K (greater than 2):</strong> 10 of the 12 numbers (3–12) → 10/12 ≈ 0.83, close to 1 → <strong>likely</strong>.",
+     "<strong>Event L (the number 10):</strong> just 1 of 12 → 1/12 ≈ 0.08, close to 0 → <strong>unlikely</strong>.",
+     "Correct: J = neither, K = likely, L = unlikely."]},
+
+ /* 5 */ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2023, Session 1, Q32", gateway:true, type:"radio",
+   prompt:"The bill for a dinner is $58.20, before sales tax and tip. Sales tax is 5% of the bill and the tip is 20% of the bill. How much is the total bill including tax and tip?",
+   options:[{key:"A",text:"$83.20"},{key:"B",text:"$72.75"},{key:"C",text:"$62.27"},{key:"D",text:"$58.45"}],
+   correct:"B", answerLabel:"B) $72.75",
+   solution:["Tax and tip are both percents of the same $58.20 bill, so together they add 5% + 20% = <strong>25%</strong>.",
+     "25% of 58.20 = 0.25 × 58.20 = <strong>$14.55</strong>.",
+     "Total = 58.20 + 14.55 = <strong>$72.75</strong> (same as 1.25 × 58.20).","Correct answer: <strong>B) $72.75</strong>."]},
+
+ /* 6 */ {domain:"Number System", standard:"7.NS.A.2c", source:"MCAP Math 7 2024 Release, Q7", gateway:true, type:"text",
+   prompt:"What is the value of the expression (−1/2) ÷ (3/5) ? Enter your answer as a fraction (for example, -5/6).",
+   unit:"",
+   validate:r=>fracEq(r,-5,6), answerLabel:"−5/6",
+   solution:["Dividing by a fraction means <strong>multiply by its reciprocal</strong>: flip 3/5 to 5/3.",
+     "(−1/2) × (5/3) = (−1 × 5) / (2 × 3) = <strong>−5/6</strong>.",
+     "A negative divided by a positive is negative.","Correct answer: <strong>−5/6</strong>."]},
+
+ /* 7 */ {domain:"Expressions & Equations", standard:"7.EE.A.2", source:"MCAP Math 7 2024 Release, Q3", type:"checkbox",
+   prompt:"Miguel eats a meal and leaves a 15% tip for the server. The cost of the meal without the tip is p dollars. Which expressions represent the total cost, in dollars, of the meal and the tip?",
+   options:[{key:"A",text:"1.15p"},{key:"B",text:"(15/100)p"},{key:"C",text:"p + 15"},{key:"D",text:"p + 0.15p"},{key:"E",text:"p + 1.15p"}],
+   correct:["A","D"], answerLabel:"A (1.15p) and D (p + 0.15p)",
+   solution:["The total = the meal (p) plus a 15% tip (0.15p): <strong>p + 0.15p</strong> — that is choice <strong>D</strong>.",
+     "Combine like terms: p + 0.15p = <strong>1.15p</strong> — that is choice <strong>A</strong>.",
+     "B = (15/100)p = 0.15p is only the tip. C adds a flat $15, not 15%. E double-counts the meal.",
+     "Correct answers: <strong>A and D</strong>."]},
+
+ /* 8 */ {domain:"Proportional Reasoning", standard:"7.RP.A.2b", source:"MCAP Math 7 2024 Release, Q10", type:"text",
+   prompt:"The graph shows a proportional relationship that passes through the points (2, 6) and (3, 9). What is the constant of proportionality?",
+   figure:()=>propGraph(),
+   unit:"",
+   validate:r=>num(r)===3, answerLabel:"3",
+   solution:["The constant of proportionality is <strong>y ÷ x</strong> for any point on the line.",
+     "Using (2, 6): 6 ÷ 2 = <strong>3</strong>. Check with (3, 9): 9 ÷ 3 = 3. ✓",
+     "So y = 3x, and the constant is <strong>3</strong>.","Correct answer: <strong>3</strong>."]},
+
+ /* 9 */ {domain:"Number System", standard:"7.NS.A.3", source:"MCAP Math 7 2024 Release, Q2", type:"text",
+   prompt:"The freezing temperatures of two substances are shown. The freezing temperature of chloroform is how many degrees Celsius greater than the freezing temperature of ethanol?",
+   figure:()=>`<table class="data"><caption>Freezing Temperatures</caption><tr><th>Substance</th><th>Freezing Temperature (°C)</th></tr><tr><td>Chloroform</td><td>−63.5</td></tr><tr><td>Ethanol</td><td>−114.7</td></tr></table>`,
+   unit:"°C",
+   validate:r=>num(r)===51.2, answerLabel:"51.2 °C",
+   solution:["“How much greater” means subtract: chloroform − ethanol = −63.5 − (−114.7).",
+     "Subtracting a negative is adding: −63.5 + 114.7.",
+     "114.7 − 63.5 = <strong>51.2</strong>.","Correct answer: <strong>51.2 °C</strong>."]},
+
+ /* 10 */ {domain:"Statistics & Probability", standard:"7.SP.A.2", source:"MCAP Math 7 2024 Release, Q34", type:"radio",
+   prompt:"A company produces 25,000 cans of soup per day. A quality-control worker checks a random sample of 50 cans each day. On a certain day, 2 cans in the sample contained less than 8 ounces. Based on this sample, what is the best estimate for the number of cans produced that day containing less than 8 ounces?",
+   options:[{key:"A",text:"100"},{key:"B",text:"250"},{key:"C",text:"500"},{key:"D",text:"1,000"}],
+   correct:"D", answerLabel:"D) 1,000",
+   solution:["In the sample, the fraction underfilled is 2 out of 50 = <strong>2/50 = 0.04</strong> (4%).",
+     "Apply that rate to the whole day: 0.04 × 25,000.",
+     "0.04 × 25,000 = <strong>1,000</strong> cans.","Correct answer: <strong>D) 1,000</strong>."]},
+
+ /* 11 */ {domain:"Expressions & Equations", standard:"7.EE.4b", source:"NYS 2025, Session 1, Q29", type:"radio",
+   prompt:"Shannon has $500.00 in her account and withdraws $40.00 each week. With no other deposits or withdrawals, what is the maximum number of weeks she can withdraw and still keep a balance of at least $200.00?",
+   options:[{key:"A",text:"5"},{key:"B",text:"7"},{key:"C",text:"8"},{key:"D",text:"12"}],
+   correct:"B", answerLabel:"B) 7",
+   solution:["She can spend down from $500 only to $200, so at most 500 − 200 = <strong>$300</strong> may be withdrawn.",
+     "Each week removes $40: 40w ≤ 300, so w ≤ <strong>7.5</strong>.",
+     "Only whole weeks count, and 8 weeks would dip below $200, so the maximum is <strong>7</strong>.",
+     "(After 7 weeks: 500 − 280 = $220 ≥ $200. ✓)","Correct answer: <strong>B) 7</strong>."]},
+
+ /* 12 */ {domain:"Proportional Reasoning", standard:"7.RP.3", source:"NYS 2024, Session 2, Q41", type:"text",
+   prompt:"Kenneth bought a shirt originally priced at $55.00. After a discount, he paid $38.50. What was the percent discount off the original price? (Type just the number, e.g. 30 for 30%.)",
+   unit:"%",
+   validate:r=>num(r)===30, answerLabel:"30%",
+   solution:["The discount in dollars is 55.00 − 38.50 = <strong>$16.50</strong>.",
+     "Percent discount = discount ÷ original = 16.50 ÷ 55.00.",
+     "16.50 ÷ 55.00 = 0.30 = <strong>30%</strong>.","Correct answer: <strong>30%</strong>."]},
+
+ /* 13 */ {domain:"Expressions & Equations", standard:"7.EE.A.1", source:"MCAP Math 7 2024 Release, Q8", gateway:true, type:"radio",
+   prompt:"Which expression is equivalent to −2(w − 3) + 5(6w + 4), written with exactly two terms?",
+   options:[{key:"A",text:"28w + 26"},{key:"B",text:"28w + 14"},{key:"C",text:"28w − 14"},{key:"D",text:"4w + 26"}],
+   correct:"A", answerLabel:"A) 28w + 26",
+   solution:["Distribute each part: −2(w − 3) = −2w + 6.",
+     "5(6w + 4) = 30w + 20.",
+     "Combine like terms: (−2w + 30w) + (6 + 20) = <strong>28w + 26</strong>.","Correct answer: <strong>A) 28w + 26</strong>."]},
+
+ /* 14 */ {domain:"Expressions & Equations", standard:"7.EE.B.4a", source:"MCAP Math 7 2024 Release, Q5", type:"text",
+   prompt:"A three-dimensional figure has one base and 3 faces. All 3 faces have the same area. The base has area 5 square centimeters, and the total surface area (including the base) is 26 square centimeters. What is the area of one face?",
+   unit:"square centimeters",
+   validate:r=>num(r)===7, answerLabel:"7 square centimeters",
+   solution:["The 3 equal faces plus the base make up the total: 3·(face) + 5 = 26.",
+     "Subtract the base: 3·(face) = 26 − 5 = <strong>21</strong>.",
+     "Divide by 3: one face = 21 ÷ 3 = <strong>7</strong>.","Correct answer: <strong>7 square centimeters</strong>."]},
+
+ /* 15 */ {domain:"Geometry", standard:"7.G.1", source:"NYS 2025, Session 2, Q47", type:"text",
+   prompt:"A rectangular mural is designed on a piece of paper 8 inches long and 6 inches wide. The scale is 1 inch to 1.75 feet. What is the actual area, in square feet, of the mural?",
+   unit:"square feet",
+   validate:r=>num(r)===147, answerLabel:"147 square feet",
+   solution:["Convert each side: length 8 × 1.75 = <strong>14 ft</strong>; width 6 × 1.75 = <strong>10.5 ft</strong>.",
+     "Area = length × width = 14 × 10.5 = <strong>147 square feet</strong>.",
+     "(Trap: don’t scale the paper area 48 by 1.75 — area scales by 1.75² = 3.0625; 48 × 3.0625 = 147, the same.)",
+     "Correct answer: <strong>147 square feet</strong>."]},
+
+ /* 16 */ {domain:"Geometry", standard:"7.G.B.6", source:"MCAP Math 7 2024 Release, Q28", type:"radio",
+   prompt:"The figure shows an L-shaped solid. At each corner, three edges meet at right angles. What is the total surface area, in square feet, of the solid?",
+   figure:()=>lSolidSVG,
+   options:[{key:"A",text:"28"},{key:"B",text:"36"},{key:"C",text:"56"},{key:"D",text:"72"}],
+   correct:"C", answerLabel:"C) 56",
+   solution:["The front (and matching back) face is an L: a 4×4 square with a 2×2 corner removed = 16 − 4 = <strong>12 sq ft each</strong>. Two of them = <strong>24</strong>.",
+     "Now the side strips. Trace around the L: 4 + 4 + 2 + 2 + 2 + 2 = <strong>16 ft</strong> of edge, each 2 ft deep → 16 × 2 = <strong>32 sq ft</strong>.",
+     "Total = 24 + 32 = <strong>56 square feet</strong>.","Correct answer: <strong>C) 56</strong>."]}
+];
+
+/* ============================ HELPERS ============================ */
+function num(raw){ const v=parseFloat(String(raw).replace(/[−–—]/g,'-').replace(/[, ]/g,'').replace(/[^0-9.\-]/g,'')); return isNaN(v)?null:v; }
+function fracEq(raw,n,d){
+  let s=String(raw).replace(/[−–—]/g,'-').replace(/\s/g,'');
+  if(s.includes('/')){ const p=s.split('/'); const a=parseFloat(p[0]),b=parseFloat(p[1]); if(!b)return false; return Math.abs(a/b - n/d)<1e-9; }
+  const v=parseFloat(s); return !isNaN(v)&&Math.abs(v-n/d)<1e-9;
+}
+function sameSet(a,b){ return a.length===b.length && a.every(x=>b.includes(x)); }
+function labelFor(q,key){ const o=q.options.find(o=>o.key===key); return o?`${key}) ${o.text}`:key; }
+
+/* ============================ RENDER ============================ */
+function optionsHTML(q,i,kind){
+  return q.options.map(o=>`<label class="opt"><input type="${kind}" name="q${i}" value="${o.key}"><span class="otext"><strong>${o.key})</strong> ${o.text}</span></label>`).join('');
+}
+function matchHTML(q,i){
+  let h=`<table class="match"><tr><th style="text-align:left">Event</th>${q.cats.map(c=>`<th>${c}</th>`).join('')}</tr>`;
+  q.events.forEach(ev=>{
+    h+=`<tr><td class="rowlab">${ev.text}</td>${q.cats.map(c=>`<td><input type="radio" name="q${i}_${ev.key}" value="${c}"></td>`).join('')}</tr>`;
+  });
+  return h+`</table>`;
+}
+function renderQuiz(){
+  const c=document.getElementById('quiz');
+  Q.forEach((q,i)=>{
+    const card=document.createElement('div'); card.className='card';
+    let h=`<span class="qnum">Question ${i+1} of ${Q.length}</span>`;
+    h+=`<div class="prompt">${q.prompt}</div>`;
+    if(q.figure) h+=`<div class="figure">${q.figure()}</div>`;
+    if(q.type==='radio') h+=optionsHTML(q,i,'radio');
+    else if(q.type==='checkbox'){ h+=`<div class="hint">Select all that apply.</div>`+optionsHTML(q,i,'checkbox'); }
+    else if(q.type==='text') h+=`<input class="textans" type="text" id="q${i}" placeholder="Type your answer" autocomplete="off"><span class="unit">${q.unit||''}</span>`;
+    else if(q.type==='match') h+=matchHTML(q,i);
+    card.innerHTML=h; c.appendChild(card);
+  });
+}
+
+/* ============================ TIMER ============================ */
+let remaining=30*60, timerId=null, done=false;
+function fmt(s){ const m=Math.floor(s/60), ss=s%60; return m+':'+String(ss).padStart(2,'0'); }
+function tick(){ const el=document.getElementById('timer'); el.textContent=fmt(remaining);
+  if(remaining<=0){ clearInterval(timerId); el.classList.add('up'); el.textContent="Time's up"; return; } remaining--; }
+timerId=setInterval(tick,1000); tick();
+
+/* ============================ GRADE ============================ */
+function grade(){
+  let score=0; const results=[];
+  Q.forEach((q,i)=>{
+    let correct=false, answered=false, userDisp="(left blank)";
+    if(q.type==='radio'){
+      const sel=document.querySelector(`input[name="q${i}"]:checked`);
+      if(sel){ answered=true; userDisp=labelFor(q,sel.value); correct=sel.value===q.correct; }
+    } else if(q.type==='checkbox'){
+      const sels=[...document.querySelectorAll(`input[name="q${i}"]:checked`)].map(x=>x.value);
+      if(sels.length){ answered=true; userDisp=sels.sort().map(v=>labelFor(q,v)).join('<br>'); }
+      correct=sameSet(sels,q.correct);
+    } else if(q.type==='text'){
+      const raw=(document.getElementById('q'+i).value||'').trim();
+      if(raw!==''){ answered=true; userDisp=raw+(q.unit?(' '+q.unit):''); }
+      correct=q.validate(raw);
+    } else if(q.type==='match'){
+      let all=true, parts=[];
+      q.events.forEach(ev=>{
+        const sel=document.querySelector(`input[name="q${i}_${ev.key}"]:checked`);
+        if(sel){ parts.push(`${ev.key}→${sel.value}`); if(sel.value!==q.correctMatch[ev.key]) all=false; }
+        else { all=false; }
+      });
+      if(parts.length){ answered=true; userDisp=parts.join('<br>'); }
+      correct=all;
+    }
+    if(correct) score++;
+    results.push({q,i,correct,answered,userDisp});
+  });
+  return {score,results};
+}
+
+/* ============================ RESULTS ============================ */
+function showResults(score,results){
+  document.querySelectorAll('#quiz input').forEach(el=>el.disabled=true);
+  const total=Q.length, pct=Math.round(score/total*100);
+  let band='low', bandTxt='Needs foundational support before Grade 8';
+  if(pct>=80){ band='ok'; bandTxt='On track for Grade 8'; }
+  else if(pct>=60){ band='mid'; bandTxt='Approaching Grade 8 readiness'; }
+
+  const dom={}; results.forEach(r=>{ const d=r.q.domain; (dom[d]=dom[d]||{c:0,t:0}); dom[d].t++; if(r.correct)dom[d].c++; });
+  let domRows=''; Object.keys(dom).forEach(d=>{ domRows+=`<tr><td>${d}</td><td>${dom[d].c} / ${dom[d].t}</td></tr>`; });
+
+  const gwMissed=results.filter(r=>r.q.gateway&&!r.correct).length;
+  const blanks=results.filter(r=>!r.answered).length;
+  const missedCount=results.filter(r=>!r.correct).length;
+
+  let flag='';
+  if(gwMissed>=2){
+    flag=`<div class="flag"><strong>Foundational focus needed.</strong> Two or more “make-or-break” gateway skills
+      (unit rate, fraction/decimal operations, percent, combining like terms) were missed. Strengthen these before building Grade 8 content on top of them.</div>`;
+  }
+  let blankNote = blanks>0 ? `<div class="note">${blanks} question(s) were left blank and counted as missed.</div>` : '';
+
+  const r=document.getElementById('results');
+  r.innerHTML=`<div class="score-card">
+      <div style="color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.8rem">Baseline Score</div>
+      <div class="score-big">${score} / ${total}</div>
+      <div class="band ${band}">${pct}% · ${bandTxt}</div>
+      <table class="brk">${domRows}</table>${flag}${blankNote}
+      <div class="note" style="margin-top:14px">${missedCount>0
+        ? 'Worked solutions for the questions that were missed are below.'
+        : 'Outstanding — nothing missed, so there are no solutions to review.'}</div>
+    </div>`;
+  r.style.display='block';
+}
+
+/* ============================ SOLUTIONS ============================ */
+let missed=[], idx=0;
+function renderSlide(){
+  const r=missed[idx], q=r.q;
+  const steps=q.solution.map(s=>`<p class="step">${s}</p>`).join('');
+  document.getElementById('slide').innerHTML=`
+    <div class="counter">Solution ${idx+1} of ${missed.length}</div>
+    <div class="sq">Question ${r.i+1}: ${q.prompt}</div>
+    ${q.figure?`<div class="figure">${q.figure()}</div>`:''}
+    <div class="ans-line you"><strong>Answer given:</strong> ${r.userDisp}</div>
+    <div class="ans-line right"><strong>Correct answer:</strong> ${q.answerLabel}</div>
+    <div class="method-h">How to solve it</div>${steps}
+    <div class="srctag">Skill: <strong>${q.domain}</strong> · Standard ${q.standard} · Source: ${q.source}</div>
+    <div class="nav">
+      <button id="prevBtn" ${idx===0?'disabled':''}>‹ Previous</button>
+      <button id="nextBtn" ${idx===missed.length-1?'disabled':''}>Next ›</button>
+    </div>`;
+  document.getElementById('prevBtn').onclick=()=>{ if(idx>0){idx--;renderSlide();scrollSol();} };
+  document.getElementById('nextBtn').onclick=()=>{ if(idx<missed.length-1){idx++;renderSlide();scrollSol();} };
+}
+function scrollSol(){ window.scrollTo({top:document.getElementById('solutions').offsetTop-60,behavior:'smooth'}); }
+function showSolutions(results){
+  const box=document.getElementById('solutions');
+  missed=results.filter(r=>!r.correct); idx=0;
+  if(missed.length===0){
+    box.innerHTML=`<div class="perfect">🎉 Perfect score — every question correct. Nothing to review.</div>
+      <div class="retake"><a href="#" onclick="location.reload();return false;">↻ Take the assessment again</a></div>`;
+  } else {
+    box.innerHTML=`<div class="sol-head">Review what was missed</div>
+      <p class="sol-sub">Work through each one slowly. Use ‹ Previous and Next › to move between solutions.</p>
+      <div class="slide" id="slide"></div>
+      <div class="retake"><a href="#" onclick="location.reload();return false;">↻ Take the assessment again</a></div>`;
+    renderSlide();
+  }
+  box.style.display='block';
+}
+
+/* ============================ SUBMIT ============================ */
+document.getElementById('submitBtn').onclick=function(){
+  if(done) return; done=true;
+  clearInterval(timerId); document.getElementById('timer').textContent='Submitted';
+  const {score,results}=grade();
+  this.disabled=true; this.textContent='Submitted ✓';
+  showResults(score,results); showSolutions(results);
+  window.scrollTo({top:document.getElementById('results').offsetTop-60,behavior:'smooth'});
+};
+
+renderQuiz();
+</script>
+</body>
+</html>
